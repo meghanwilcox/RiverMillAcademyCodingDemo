@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dad Joke Generator 😂</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #fff9c4;
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255, 220, 0, 0.15) 40px,
+        rgba(255, 220, 0, 0.15) 80px
+      );
+    }
+
+    h1 {
+      font-family: 'Bangers', cursive;
+      font-size: 4rem;
+      color: #222;
+      letter-spacing: 3px;
+      text-shadow: 4px 4px 0px #f9a825;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 40px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      border: 4px solid #222;
+      border-radius: 20px;
+      box-shadow: 8px 8px 0px #222;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      transition: transform 0.1s ease;
+    }
+
+    .card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 10px 10px 0px #222;
+    }
+
+    #joke-text {
+      font-size: 1.4rem;
+      color: #222;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    #joke-text.loading {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    button {
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      background-color: #f9a825;
+      color: #222;
+      border: 4px solid #222;
+      border-radius: 14px;
+      padding: 14px 40px;
+      cursor: pointer;
+      box-shadow: 5px 5px 0px #222;
+      transition: all 0.1s ease;
+    }
+
+    button:hover {
+      background-color: #ffd54f;
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0px #222;
+    }
+
+    button:active {
+      transform: translate(3px, 3px);
+      box-shadow: 2px 2px 0px #222;
+    }
+
+    .error {
+      color: #e53935;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Dad Joke Generator</h1>
+  <p class="subtitle">Warning: These jokes are extremely punny 🥁</p>
+
+  <div class="card">
+    <p id="joke-text">Click the button to get a joke!</p>
+  </div>
+
+  <button id="joke-btn">Get a Joke!</button>
+
+  <script>
+    // Step 1: Grab the elements we want to control
+    const jokeText = document.getElementById("joke-text");
+    const jokeBtn  = document.getElementById("joke-btn");
+
+    // Step 2: Write a function that fetches a joke from the internet
+    async function getDadJoke() {
+
+      // Step 3: Show "loading..." while we wait
+      jokeText.textContent = "Loading...";
+      jokeText.classList.add("loading");
+
+      // Step 4: Use fetch() to call the Dad Joke API
+      try {
+        const response = await fetch("https://icanhazdadjoke.com/", {
+          headers: {
+            Accept: "application/json"
+          }
+        });
+
+        // Step 5: Convert the response into a JavaScript object
+        const data = await response.json();
+
+        // Step 6: Put the joke on the page!
+        jokeText.textContent = data.joke;
+        jokeText.classList.remove("loading");
+
+      } catch (error) {
+        // If something goes wrong, show an error message
+        jokeText.textContent = "Uh oh! Couldn't fetch a joke. Check your internet!";
+        jokeText.classList.add("error");
+      }
+    }
+
+    // Step 7: When the button is clicked, run getDadJoke()
+    jokeBtn.addEventListener("click", getDadJoke);
+  </script>
+
+</body>
+</html>
