@@ -1,6 +1,8 @@
 # River Mill Academy Coding Demo
 This repository contains the demo code for the River Mill Academy Coding Demo. Please find instructions to complete the demo/code-along below.
 
+API URL: https://icanhazdadjoke.com/
+ 
 # 🎤 Dad Joke Generator — Step-by-Step Guide
 ### For students following along in the workshop!
 
